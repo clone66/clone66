@@ -24,7 +24,7 @@ def move_c():
       #  dy=-dy
         print('x '+str(x))
         print('dx '+str(dx))
-
+#y
     if y>H or y<=0:
         dy=-dy  
         print('y '+str(y))
