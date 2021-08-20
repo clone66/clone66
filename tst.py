@@ -1,61 +1,45 @@
 import tkinter as tk
-from random import randint
 W=150
 H=150
-root=tk.Tk()
-root.geometry(str(W)+'x'+str(H))
-root.maxsize(width=150,height=150)
 
-def pos(event):
-    #global bl
-    x,y=3,5
-    canvas.move(bl,x,y)
 
-    print(event.x)
+class Ball:
+    def __init__(self):
+        self.dx,self.dy=4,6
+        self.x,self.y=15,50
+        self.bl=canvas.create_rectangle(11,44,25,30,fill='red')
+   
+    def move(self):
+        self.x+=self.dx
+        self.y+=self.dy
+        if self.x>W or self.x<=0:
+            self.dx=-self.dx
+            
+            print('x '+str(self.x))
+            print('dx '+str(self.dx))
 
-def move_c():
-    global x,y,dx,dy
-    global bl
+        if self.y>H or self.y<=0:
+            self.dy=-self.dy  
+            print('y '+str(self.y))
+            print('dy '+str(self.dy))
+        canvas.move(self.bl,self.dx,self.dy)
     
-    x+=dx
-    y+=dy
-    if x>W or x<=0:
-        dx=-dx
-      #  dy=-dy
-        print('x '+str(x))
-        print('dx '+str(dx))
+def tick():
+    ball.move()     
+    root.after(50,tick)
 
-    if y>H or y<=0:
-        dy=-dy  
-        print('y '+str(y))
-        print('dy '+str(dy))
-    canvas.move(bl,dx,dy)
-    
-    root.after(200,move_c)
-    
+def main():
+    global canvas,root,ball
+    root=tk.Tk()
+    root.geometry(str(W)+'x'+str(H))
+    root.maxsize(width=170,height=170)
+    canvas=tk.Canvas(root,width=140,height=140,bg='green')
+    canvas.pack()
+    ball=Ball()
+    tick()
+    root.mainloop()
 
-
-
-
-canvas=tk.Canvas(root,width=140,height=140,bg='green')
-canvas.pack()
-
-#h
-
-#print(root.winfo_reqwidth())
-dx,dy=+15,+13
-x,y=15,50
-
-bl=canvas.create_oval(x,y,25,30,fill='red')
-
-move_c()
-
-#print(root.bind('<Button-1>',pos))
-
-
-#canvas.bind('<Button-1>',move_c)
+main()
 
 
 
-
-root.mainloop()
